@@ -20,6 +20,7 @@ public class HomeController : Controller
         });
     }
 
+
     public IActionResult ViewBlog(int id)
     {
         var db = new BlogSiteDb(_connectionString);
