@@ -1,0 +1,30 @@
+﻿@model NorthwndViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Orders</h1>
+</div>
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Order Date</th>
+                <th>Ship Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Order order in Model.orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.OrderDate.ToLongDateString()</td>
+                    <td>@order.ShipAddress</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,79 @@
+﻿@model ViewBlogViewModel
+
+<div b-h3z81f26w4 class="container">
+    <main b-h3z81f26w4 role="main" class="pb-3">
+
+        <div class="row">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Title -->
+                <h1 class="mt-4">@Model.Blog.Title</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by Etty Miller
+
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p>Posted on @Model.Blog.DatePosted.ToLongDateString()</p>
+
+                <hr>
+
+                @foreach (string paragraph in Model.Blog.Content.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <p style="font-size:20px;">@paragraph</p>
+                }
+                <hr>
+
+                <!-- Comments Form -->
+                <div class="card my-4">
+                    <h5 class="card-header">Leave a Comment:</h5>
+                    <div class="card-body">
+                        <form method="post" action="/home/addcomment">
+                            <input type="hidden" value="@Model.Blog.Id" name="postId" />
+                            <input type="hidden" value="@DateTime.Now" name="dateCommented" />
+                            <div class="form-group">
+                                <input id="name" type="text" placeholder="Please enter your name" class="form-control" name="name" value="@Model.LastCommenter" />
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Type your comment here but remember to be nice..." id="content" name="content" class="form-control mt-3" rows="3"></textarea>
+                            </div>
+                            <button id="submit" disabled class="btn btn-primary mt-3">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                @if (Model.BlogComments != null)
+                {
+                    foreach (BlogComment bc in Model.BlogComments)
+                    {
+                        <div class="media mb-4">
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0">
+                                    @bc.Name
+                                    <small> @bc.DateCommented.ToLongDateString()</small>
+                                </h5>
+                                @bc.Content
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+
+
+    </main>
+</div>
+
+@section scripts {
+    <script src="~/js/viewblog.js"></script>
+}

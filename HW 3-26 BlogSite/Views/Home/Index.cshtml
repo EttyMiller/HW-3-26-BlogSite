@@ -1,0 +1,59 @@
+﻿@model IndexViewModel
+
+<div b-h3z81f26w4 class="container">
+    <main b-h3z81f26w4 role="main" class="pb-3">
+        <!-- Page Content -->
+
+        <div class="container">
+
+            <div class="row">
+
+                <!-- Blog Entries Column -->
+                <div class="col-md-8">
+
+                    <h1 class="my-4">
+                        LIT Blog
+                        <small>Nothing to see here...</small>
+                    </h1>
+                    @foreach (Blog blog in Model.Blogs)
+                    {
+                        string s = blog.Content;
+                        if (s.Length > 200)
+                        {
+                            s = s.Substring(0, 200);
+                            s += ".....";
+                        }
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    <a style="text-decoration:none;" href="/home/viewblog?id=@blog.Id">@blog.Title</a>
+                                </h2>
+                                <p class="card-text">@s</p>
+                                <a href="/home/viewblog?id=@blog.Id" class="btn btn-primary">Read More &rarr;</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                @blog.DatePosted.ToLongDateString()
+                                by Etty Miller
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.row -->
+            <ul class="pagination justify-content-center mb-4">
+                @if (Model.Page < Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/home/index?page=@(Model.Page+1)">&larr; Older</a>
+                    </li>
+                }
+                @if (Model.Page > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/home/index?page=@(Model.Page-1)">Newer &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </main>
+</div>
